@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "216603266527",
+    "project_id": "trackmemore-ac91c",
+    "storage_bucket": "trackmemore-ac91c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216603266527:android:0d48dccafe2838b6f7c86a",
+        "android_client_info": {
+          "package_name": "unipi.exercise.trackmemore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsXHR1STS4kIsfGli2-C3aMbTUDFL7rBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
