@@ -40,6 +40,9 @@ public class SpeedCondtion implements Serializable {
         return speedChange;
     }
 
+    public Enum getType() {
+        return type;
+    }
     public void setType(Enum type) {
         this.type = type;
     }

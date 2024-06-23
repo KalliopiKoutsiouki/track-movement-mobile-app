@@ -13,4 +13,11 @@
     <string name="tracking">Tracking...</string>
     <string name="welcome">TrackMe!</string>
     <string name="trackingResult">Results</string>
+    <string name="acceleration">Acceleration</string>
+    <string name="breaks">Breaks</string>
+    <string name="pit">Pit</string>
+    <string name="speed_violation">Speed Violation</string>
+    <string name="apply_filters">Apply Filters</string>
+    <string name="type">Type</string>
+    <string name="timestamp">Timestamp</string>
 </resources>
