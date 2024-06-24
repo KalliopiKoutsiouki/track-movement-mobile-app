@@ -9,6 +9,7 @@
         tools:ignore="HighSamplingRate" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackMeMore"
         tools:targetApi="31">
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCsjE9FpIdfsbxYDvsKm8eTFr4aZm-skbc" />
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
         <activity
             android:name=".TrackingListActivity"
             android:exported="false" />
@@ -41,7 +59,8 @@
             android:name=".service.TrackingService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="location" />
+            android:foregroundServiceType="location"
+            />
     </application>
 
 </manifest>

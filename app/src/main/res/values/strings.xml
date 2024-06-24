@@ -20,4 +20,6 @@
     <string name="apply_filters">Apply Filters</string>
     <string name="type">Type</string>
     <string name="timestamp">Timestamp</string>
+    <string name="show_in_google_maps">Show in Google Maps</string>
+    <string name="tracking_list_title">Results</string>
 </resources>

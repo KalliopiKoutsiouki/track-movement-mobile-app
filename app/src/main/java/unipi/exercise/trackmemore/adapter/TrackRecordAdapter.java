@@ -16,13 +16,14 @@ import unipi.exercise.trackmemore.model.SpeedCondtion;
 
 public class TrackRecordAdapter extends RecyclerView.Adapter<TrackRecordAdapter.TrackRecordViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<SpeedCondtion> trackRecordList;
 
     public TrackRecordAdapter(Context context, List<SpeedCondtion> trackRecordList) {
         this.context = context;
         this.trackRecordList = trackRecordList;
     }
+
     @NonNull
     @Override
     public TrackRecordAdapter.TrackRecordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +49,7 @@ public class TrackRecordAdapter extends RecyclerView.Adapter<TrackRecordAdapter.
         trackRecordList = newList;
         notifyDataSetChanged();
     }
+
     class TrackRecordViewHolder extends RecyclerView.ViewHolder {
         TextView typeTextView;
         TextView timestampTextView;

@@ -17,7 +17,6 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -46,7 +45,7 @@ public class TrackingService extends Service implements SensorEventListener, Loc
     private LocationManager locationManager;
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private List<Float> speedRecordList = new ArrayList<>();
+    private final List<Float> speedRecordList = new ArrayList<>();
     private DatabaseReference databaseReference;
     private String userId;
     private Location lastKnownLocation;
@@ -78,8 +77,9 @@ public class TrackingService extends Service implements SensorEventListener, Loc
                 .setContentIntent(pendingIntent)
                 .build();
     }
-        @SuppressLint("ForegroundServiceType")
-        @Override
+
+    @SuppressLint("ForegroundServiceType")
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         userId = intent.getStringExtra("userId");
 
@@ -131,7 +131,6 @@ public class TrackingService extends Service implements SensorEventListener, Loc
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
-
 
 
     private void stopTracking() {
@@ -199,7 +198,7 @@ public class TrackingService extends Service implements SensorEventListener, Loc
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Do nothing for now
+
     }
 
     private void handleAccelerometerData(float x, float y, float z) {

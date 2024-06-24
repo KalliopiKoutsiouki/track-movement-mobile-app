@@ -1,6 +1,6 @@
 package unipi.exercise.trackmemore;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,9 +10,6 @@ import android.widget.CheckBox;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,8 +31,11 @@ public class TrackingListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TrackRecordAdapter adapter;
     private List<SpeedCondtion> trackRecordList;
+
+    private List<SpeedCondtion> filteredTrackRecordList;
     private CheckBox chkAcceleration, chkBreaks, chkPit, chkSpeedViolation;
     private Button btnApplyFilters;
+    private Button btnShowInMaps;
     private DatabaseReference databaseReferenceAccelerations;
     private DatabaseReference databaseReferenceBreaks;
     private DatabaseReference databaseReferencePit;
@@ -47,16 +47,17 @@ public class TrackingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tracking_list);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
         initializeComponents();
         btnApplyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 applyFilters();
+            }
+        });
+        btnShowInMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInGoogleMaps();
             }
         });
         fetchTrackRecords();
@@ -69,7 +70,9 @@ public class TrackingListActivity extends AppCompatActivity {
         chkPit = findViewById(R.id.chkPit);
         chkSpeedViolation = findViewById(R.id.chkSpeedViolation);
         btnApplyFilters = findViewById(R.id.btnApplyFilters);
+        btnShowInMaps = findViewById(R.id.btnShowInMaps);
         trackRecordList = new ArrayList<>();
+        filteredTrackRecordList = new ArrayList<>();
         adapter = new TrackRecordAdapter(this, trackRecordList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -99,8 +102,8 @@ public class TrackingListActivity extends AppCompatActivity {
                     for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                         SpeedCondtion trackRecord = childSnapshot.getValue(SpeedCondtion.class);
                         if (trackRecord != null) {
-                            trackRecord.setType(type); // Set the type of the record
-                            trackRecordList.add(trackRecord); // Add the record to the list
+                            trackRecord.setType(type);
+                            trackRecordList.add(trackRecord);
                         }
                     }
                 }
@@ -114,21 +117,30 @@ public class TrackingListActivity extends AppCompatActivity {
         });
     }
 
+    private void showInGoogleMaps() {
+        if (trackRecordList.isEmpty()) {
+            return;
+        }
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("track_record_list", new ArrayList<>(filteredTrackRecordList));
+        startActivity(intent);
+    }
+
     private void applyFilters() {
         boolean acceleration = chkAcceleration.isChecked();
         boolean breaks = chkBreaks.isChecked();
         boolean pit = chkPit.isChecked();
         boolean speedViolation = chkSpeedViolation.isChecked();
 
-        List<SpeedCondtion> filteredList = new ArrayList<>();
+        filteredTrackRecordList.clear();
         for (SpeedCondtion record : trackRecordList) {
             if ((acceleration && record.getType() == Type.ACCELERATION) ||
                     (breaks && record.getType() == Type.BREAK) ||
                     (pit && record.getType() == Type.PIT) ||
                     (speedViolation && record.getType() == Type.SPEED_VIOLATION)) {
-                filteredList.add(record);
+                filteredTrackRecordList.add(record);
             }
         }
-        adapter.updateList(filteredList);
+        adapter.updateList(filteredTrackRecordList);
     }
 }

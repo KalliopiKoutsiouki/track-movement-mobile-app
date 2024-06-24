@@ -49,15 +49,15 @@ public class MainActivity extends AppCompatActivity {
         reference = database.getReference("message");
     }
 
-    public void signup(View view){
+    public void signup(View view) {
         if (checkEmptyInput()) return;
         auth.createUserWithEmailAndPassword(emailText.getText().toString(),
                 passwordText.getText().toString()).addOnCompleteListener(
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            showMessage("Success","User has been created!");
+                        if (task.isSuccessful()) {
+                            showMessage("Success", "User has been created!");
                         } else {
                             showMessage("Error", Objects.requireNonNull(task.getException()).getLocalizedMessage());
                         }
@@ -65,14 +65,15 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-    public void signin(View view){
+
+    public void signin(View view) {
         if (checkEmptyInput()) return;
         auth.signInWithEmailAndPassword(emailText.getText().toString(),
                 passwordText.getText().toString()).addOnCompleteListener(
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             FirebaseUser user = auth.getCurrentUser();
                             if (user != null) {
                                 checkAuthorizedAndRedirect(user);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         } else {
-                            showMessage("Error",task.getException().getLocalizedMessage());
+                            showMessage("Error", task.getException().getLocalizedMessage());
                         }
                     }
                 }
@@ -92,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("User ID: " + user.getUid());
         System.out.println("User Email: " + user.getEmail());
         System.out.println("User Name: " + user.getDisplayName());
-        if (user != null ) {
-            Log.d("INSIDE_REDIRECT_METHOD", "Passed the check");
+        if (user != null) {
             Intent intent = new Intent(MainActivity.this, HomePage.class);
             intent.putExtra("userId", user.getUid());
             intent.putExtra("email", user.getEmail());
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    void showMessage(String title, String message){
+    void showMessage(String title, String message) {
         new AlertDialog.Builder(this).setTitle(title).setMessage(message).setCancelable(true).show();
     }
 }
