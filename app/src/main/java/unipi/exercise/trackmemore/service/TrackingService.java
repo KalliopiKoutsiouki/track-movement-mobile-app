@@ -41,7 +41,7 @@ import unipi.exercise.trackmemore.model.Type;
 
 public class TrackingService extends Service implements SensorEventListener, LocationListener {
     private static final String CHANNEL_ID = "TrackingServiceChannel";
-    private static final float SPEED_LIMIT = 100.0f; // km/h
+    private static final float SPEED_LIMIT = 100.0f;
     private LocationManager locationManager;
     private SensorManager sensorManager;
     private Sensor accelerometer;

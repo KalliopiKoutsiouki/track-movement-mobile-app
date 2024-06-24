@@ -142,5 +142,10 @@ public class TrackingListActivity extends AppCompatActivity {
             }
         }
         adapter.updateList(filteredTrackRecordList);
+        if (filteredTrackRecordList.isEmpty()) {
+            btnShowInMaps.setVisibility(View.GONE);
+        } else {
+            btnShowInMaps.setVisibility(View.VISIBLE);
+        }
     }
 }
